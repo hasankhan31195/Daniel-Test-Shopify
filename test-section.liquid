@@ -1,0 +1,160 @@
+<style>
+  .custom_section{
+    max-width:120rem;
+    margin:0 auto
+  }
+  .main_container{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    padding:10px;
+    gap:10px
+  }
+  .block_item{
+    width:32%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    background-color:#efefef;
+    padding-bottom:20px
+  }
+  .main_image{
+    width:100%
+  }
+  .badge_image{
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:100px;
+    height:100px;
+  }
+  .dr_name{
+    color:green;
+    font-size:18px;
+    font-weight:bold;
+    text-align:center;
+    width:100%;
+    margin:0 10px;
+  }
+  .headline{
+    color:#000;
+    font-size:24px;
+    text-align:center;
+    width:100%;
+    margin:0 10px;
+  }
+  .body_text{
+    color:gray;
+    font-size:14px;
+    text-align:center;
+    width:100%;
+    margin:0 10px;
+  }
+  .custom_button{
+    background-color:#000;
+    color:#fff;
+    font-size:14px;
+    text-align:center;
+    padding:10px 20px;
+    border-radius:5px;
+    text-decoration:none;
+    font-weight:bold;
+    text-transform:uppercase;
+    min-width:250px;
+    max-width:100%;
+    text-overflow:ellipse;
+    margin:0 10px;
+  }
+  @media(max-width:768px){
+    .block_item{
+      width:100%;
+    }
+  }
+</style>
+<section class="custom_section">
+  <h2 style="text-align:center">{{ section.settings.title }}</h2>
+  <div class="main_container">
+    {%for block in section.blocks%}
+      <div class="block_item">
+        <img src="{{ block.settings.main_image | img_url: "large"}}" class="main_image"/>
+        <img src="{{ block.settings.badge_image | img_url}}" class="badge_image"/>
+        <span class="dr_name">{{ block.settings.dr_name}}</span>
+        <h2 class="headline">{{ block.settings.headline}}</h2>
+        <div class="body_text">{{ block.settings.body_text}}</div>
+        <a href="{{ block.settings.link}}" class="custom_button">{{ block.settings.linktext}}</a>
+      </div>
+    {%endfor%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Test Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Test Section"
+    }
+  ],
+  "blocks": [
+	         {
+               "type": "block",
+               "name": "Custom Block",
+               "settings": [
+		         {
+                   "type": "image_picker",
+                   "id": "main_image",
+                   "label": "Main Image",
+                   "info": "Add image for main image"
+                 },
+                 {
+                   "type": "image_picker",
+                   "id": "badge_image",
+                   "label": "Badge Image",
+                   "info": "Add image for badge"
+                 },
+                  {
+                   "type":"text",
+                   "id":"dr_name",
+                   "label":"Doctor's Name",
+                   "default":"Type doctor's name here"
+                },
+                  {
+                   "type":"text",
+                   "id":"headline",
+                   "label":"Headline",
+                   "default":"Add headline text"
+                },
+                 {
+                   "type":"richtext",
+                   "id":"body_text",
+                   "label":"Body Text",
+                   "default":"<p>Add some text to show up in the body.</p>"
+                },
+                 {
+                  "id": "link",
+                  "type": "url",
+                  "label": "Button link"
+                },
+                {
+                  "id": "linktext",
+                  "type": "text",
+                  "label": "Button text",
+                  "default": "Click Here"
+                }
+               ]
+             }
+             ],
+  "presets": [
+    {
+      "name": "Test Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %} 
